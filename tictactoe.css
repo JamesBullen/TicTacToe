@@ -1,0 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #fcf5f4;
+}
+
+h3 {
+    text-align: center;
+    color: #3c1613;
+}
+
+button {
+    background-color: #f6d5d2;
+    font-family: inherit;
+    color: inherit;
+}
+
+button:focus {
+    background-color: #f6d5d2;
+}
+
+#screen {
+    display: grid;
+    justify-content: center;
+    max-width: 1000px;
+    margin-inline: auto;
+    padding-top: 50px;
+    color: #c4544a;
+}
+
+.cell {
+    justify-content: center;
+    text-align: center;
+    margin-inline: 10px;
+    width: 50px;
+    height: 50px;
+    font-weight: bolder;
+    border-style:inset;
+}
+
+#options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+#options button {
+    margin-inline: 10px;
+}
