@@ -56,7 +56,11 @@ class gamestate {
         for (let gridRow = 0; gridRow < this.gridSize; gridRow++) {
             tempRow.push(`<div class=row>`)
             for (let gridCol = 0; gridCol < this.gridSize; gridCol++) {
-                tempRow.push(`<button onClick="nextMove(this.id)" class="cell col" id="${gridCol},${gridRow}">${this.gameboard[`${gridCol},${gridRow}`]}</button>`);
+                let pressed = ""
+                if (this.gameboard[`${gridCol},${gridRow}`] !== " ") {
+                    pressed = "pressed"
+                }
+                tempRow.push(`<button onClick="nextMove(this.id)" class="cell col ${pressed}" id="${gridCol},${gridRow}">${this.gameboard[`${gridCol},${gridRow}`]}</button>`);
             };
             tempRow.push(`</div>`)
         };
@@ -152,11 +156,13 @@ class gameRecord {
         let tempRow = [];
 
         for (let gridRow = 0; gridRow < gridSize; gridRow++) {
-            console.log(`row`)
             tempRow.push(`<div class=row>`)
             for (let gridCol = 0; gridCol < gridSize; gridCol++) {
-                console.log(`col`)
-                tempRow.push(`<button disabled class="cell col" id="${gridCol},${gridRow}">${this.gameboard[`${gridCol},${gridRow}`]}</button>`);
+                let pressed = ""
+                if (this.gameboard[`${gridCol},${gridRow}`] !== " ") {
+                    pressed = "pressed"
+                }
+                tempRow.push(`<button disabled class="cell col ${pressed}" id="${gridCol},${gridRow}">${this.gameboard[`${gridCol},${gridRow}`]}</button>`);
             };
             tempRow.push(`</div>`)
         };
@@ -356,25 +362,25 @@ function setOptions(menuType) {
     
     switch (menuType) {
         case "base":
-            optionsArea.innerHTML = `<button onclick="setOptions('setup'), showMenu(['game'],['setupMenuField'])">New Game</button>
-            <button onclick="saveGame()" ${noSaves}>Save Game</button>
-            <button onclick="setGameSelect(), setOptions('games'), showMenu(['game'],['gameMenuField'])" ${noGames}>Load Game</button>
-            <button onclick="setGameRecords(), setOptions('records'), showMenu(['game'],['pastMenuField'])" ${noRecords}>Past Game</button>`
+            optionsArea.innerHTML = `<button class="option" onclick="setOptions('setup'), showMenu(['game'],['setupMenuField'])">New Game</button>
+            <button class="option" onclick="saveGame()" ${noSaves}>Save Game</button>
+            <button class="option" onclick="setGameSelect(), setOptions('games'), showMenu(['game'],['gameMenuField'])" ${noGames}>Load Game</button>
+            <button class="option" onclick="setGameRecords(), setOptions('records'), showMenu(['game'],['pastMenuField'])" ${noRecords}>Past Game</button>`
             break;
         case "setup":
-            optionsArea.innerHTML = `<button onclick="checkSetupInput(size.value, players.value, goal.value)">Next</button>
-            <button onclick="setOptions('base'), showMenu(['setupMenuField'],['game'])">Cancel</button>`
+            optionsArea.innerHTML = `<button class="option" onclick="checkSetupInput(size.value, players.value, goal.value)">Next</button>
+            <button class="option" onclick="setOptions('base'), showMenu(['setupMenuField'],['game'])">Cancel</button>`
             break;
         case "players":
-            optionsArea.innerHTML = `<button onclick="checkPlayersInput(players.value)">Start Game</button>
-            <button onclick="setOptions('setup'), showMenu(['playerMenuField'],['setupMenuField'])">Back</button>
-            <button onclick="setOptions('base'), showMenu(['playerMenuField'],['game'])">Cancel</button>`
+            optionsArea.innerHTML = `<button class="option" onclick="checkPlayersInput(players.value)">Start Game</button>
+            <button class="option" onclick="setOptions('setup'), showMenu(['playerMenuField'],['setupMenuField'])">Back</button>
+            <button class="option" onclick="setOptions('base'), showMenu(['playerMenuField'],['game'])">Cancel</button>`
             break;
         case "games":
-            optionsArea.innerHTML = `<button onclick="setOptions('base'), showMenu(['gameMenuField'],['game'])">Back</button>`
+            optionsArea.innerHTML = `<button class="option" onclick="setOptions('base'), showMenu(['gameMenuField'],['game'])">Back</button>`
             break;
         case "records":
-            optionsArea.innerHTML = `<button onclick="setOptions('base'), showMenu(['pastMenuField'],['game'])">Back</button>`
+            optionsArea.innerHTML = `<button class="option" onclick="setOptions('base'), showMenu(['pastMenuField'],['game'])">Back</button>`
             break;
     };
 };
@@ -419,9 +425,18 @@ function changeStyle(button) {
 
 setOptions('base');
 
+const buttonList = document.querySelectorAll('.cell');
+buttonList.forEach(button => {
+    button.addEventListener('click', () => {
+        button.classList.add('pressed');
+    });
+})
+
+
 
 // add comments
 // reduce repeated code
 // reorder functions
+// remove alerts and replace with text in DOM
 // add easter egg feature to demo
 // add ai for singleplayer
