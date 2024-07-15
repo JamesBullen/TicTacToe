@@ -1,3 +1,4 @@
+/* Variables */
 :root {
     --colour1: #ffeed0;
     --colour2: #f79f24;
@@ -9,6 +10,7 @@
     --colourDisabled: #ff9bb0;
 }
 
+/* General */
 * {
     margin: 0;
     padding: 0;
@@ -27,6 +29,31 @@ h3 {
     font-weight: bolder;
 }
 
+/* Game Section */
+.cell {
+    justify-content: center;
+    text-align: center;
+    margin-inline: 10px;
+    width: 50px;
+    height: 50px;
+    font-weight: bolder;
+    border-width: 10px;
+    border-style: inset;
+
+    color: var(--colour1);
+    background-color: var(--colour2);
+    border-color: var(--colour2);
+}
+
+.cell:focus{
+    background-color: var(--colour2);
+}
+
+.pressed {
+    border-style: outset;
+}
+
+/* Options Section */
 .option {
     background-color: var(--colour1);
     font-family: inherit;
@@ -66,29 +93,6 @@ h3 {
     margin-inline: auto;
     padding-top: 50px;
     color: #c4544a;
-}
-
-.cell {
-    justify-content: center;
-    text-align: center;
-    margin-inline: 10px;
-    width: 50px;
-    height: 50px;
-    font-weight: bolder;
-    border-width: 10px;
-    border-style: inset;
-
-    color: var(--colour1);
-    background-color: var(--colour2);
-    border-color: var(--colour2);
-}
-
-.cell:focus{
-    background-color: var(--colour2);
-}
-
-.pressed {
-    border-style: outset;
 }
 
 #options {
