@@ -367,6 +367,7 @@ function loadPastGame(index) {
 }
 
 function setOptions(menuType) {
+    // Sets up if button should be disabled or not
     let noSaves = '';
     let noGames = '';
     let noRecords = '';
