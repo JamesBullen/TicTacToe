@@ -6,6 +6,7 @@ let gameActive = true;
 const gameGrid = document.querySelector(`#game`);
 const optionsArea = document.querySelector(`#options`);
 
+// Creates object that'll store relevant game data and mutate its values as needed
 class gamestate {
     constructor(gridSize, players, winCon, id=totalGames, board=null, turn=1) {
         this.id = id;
@@ -17,6 +18,7 @@ class gamestate {
         this.turn = turn;
     };
     
+    // Fills an object array the coords of the selected game grid size, and assigns them as blank
     generateGrid() {
         if (this.gameboard == null) {
             let newGameboard = {};
@@ -29,7 +31,7 @@ class gamestate {
         };
     };
 
-    // 
+    // Updates object array of what token is at which coord
     updateGrid(coord, token) {
         if (this.gameboard[coord] === " ") {
             this.gameboard[coord] = token;
@@ -39,23 +41,25 @@ class gamestate {
         return false;
     };
 
+    // Updates visual grid to diaply newly placed tokens
     updatePageGrid(coord, token) {
-        console.log(`test`)
         let gridSpace = document.getElementById(coord.join());
         gridSpace.innerText = token;
-        changeStyle(gridSpace)
     };
 
-    // Creates HTML elements to represent the gameboard
+    // Creates array of elements used to represent the gameboard
     generatePageGrid() {
         gameGrid.innerHTML = '';
 
         let toAppend = document.createElement(`div`);
         let tempRow = [];
 
+        // Creates a new row for the game grid
         for (let gridRow = 0; gridRow < this.gridSize; gridRow++) {
             tempRow.push(`<div class=row>`)
+            // Adds each column for the row
             for (let gridCol = 0; gridCol < this.gridSize; gridCol++) {
+                // Checks if cell has already been filled and sets to active, can be expanded to auto disable used buttons
                 let pressed = ""
                 if (this.gameboard[`${gridCol},${gridRow}`] !== " ") {
                     pressed = "pressed"
@@ -68,9 +72,11 @@ class gamestate {
         gameGrid.append(toAppend);
     };
 
+    // Checks after a token is placed if a game ending condition is met
     checkForWin(coord, token) {
         let spacesToCheck = [];
 
+        // Creates array of surrounding coords with matching tokens
         for (let i = 0; i < kernelMatrix.length; i++) {
             let newCoord = (this.addCoord(this.textToCoord(coord), kernelMatrix[i])).join()
             if (this.gameboard[newCoord] == token) {
@@ -85,21 +91,24 @@ class gamestate {
             }
         };
 
+        // Checks if should end in draw, determined by turns passed versus possible spaces
         if (this.turn >= this.spaces) {
             endGame(`Draw`);
             return;
         };
 
+        // Incements turn counter and continues game
         this.turn++
         return;
     };
 
-
+    // Returns true if a winning line length is now present in given direction, returns false if otherwise
     checkLine(start, direction, token) {
         let lineCount = this.checkDirection(start, direction, token);
         if (lineCount == this.winCon) {
             return true;
         }
+        // If a win condition isnt met, it'll check the line in the oppersite direction next
         else if (this.checkDirection(start, this.mutateCoord(direction, [-1,-1]), token, lineCount) == this.winCon) {
             return true;
         }
@@ -108,11 +117,11 @@ class gamestate {
         }
     };
 
+    // Recursively checks if cell in given direction has matching token, then check that cell until no match or loop equals win condition number
     checkDirection(start, direction, token, count=1) {
         if (count == this.winCon || !this.gameboard[start]) {
             return count;
         };
-
 
         let newCoord = this.addCoord(this.textToCoord(start), direction);
         if (this.gameboard[newCoord.join()] == token) {
@@ -122,18 +131,22 @@ class gamestate {
         return count;
     };
 
+    // Converts a text value into a two number array
     textToCoord(input) {
         return input.split(",").map((a) => Number(a));
     };
     
+    // Multiplies one array by another
     mutateCoord(input, mutation) {
         return input.map((a,b) => a * mutation[b]);
     };
 
+    // Adds together the value of two arrays
     addCoord(input, mutation) {
         return input.map((a,b) => a + mutation[b]);
     };
 
+    // Determines which players token should be placed next, using the turn count
     currentPlayer() {
         let playersTurn = this.turn % Object.keys(this.players).length;
         if (playersTurn == 0) {
@@ -143,21 +156,25 @@ class gamestate {
     };
 };
 
+// Stripped version of Gamestate class to only store what's needed in local storage and prevent accidental value mutation
 class gameRecord {
     constructor(gameboard, result) {
         this.gameboard = gameboard;
         this.result = result;
     };
 
+    // Similair function to Class Gamestate's generatePageGrid fucntion
     generatePageGrid() {
         gameGrid.innerHTML = '';
         let gridSize = Math.sqrt(Object.keys(this.gameboard).length)
-
         let tempRow = [];
 
+        // Creates a new row for the game grid
         for (let gridRow = 0; gridRow < gridSize; gridRow++) {
             tempRow.push(`<div class=row>`)
+            // Adds each column for the row
             for (let gridCol = 0; gridCol < gridSize; gridCol++) {
+                // Checks if cell has already filled, and sets to active
                 let pressed = ""
                 if (this.gameboard[`${gridCol},${gridRow}`] !== " ") {
                     pressed = "pressed"
@@ -166,18 +183,21 @@ class gameRecord {
             };
             tempRow.push(`</div>`)
         };
-        console.log(tempRow)
         gameGrid.innerHTML = tempRow.join("")
     };
 };
 
+// Creates a new game, calls all relevant functions and sets relevant variables
 function newGame(size, goal) {
+    // Check to see if doesn't exist in local storage to prevent error
     if (totalGames == NaN) {
         totalGames = 0
     };
     if (currentGame) {
         saveGame();
     };
+    
+    // Inciments turn counter, creates new game, sets it as the active game, generates its visuals, saves new game to local storage, and allows for button inputs
     totalGames++
     const madeGame = new gamestate(size, playerTokens, goal)
     currentGame = madeGame;
@@ -217,6 +237,7 @@ function loadGame(selectedGame) {
     gameActive = true;
 };
 
+// To be expanded, retires active game and saves game to pastGames in local storage
 function quitGame() {
     endGame(`Never Finished`);
 }
@@ -251,6 +272,7 @@ function nextMove(selectedSpace) {
     };
 };
 
+// Sets cell of demo game to a letter, so spells 'Tic Tac Toe' when filled
 function demoMove(cellID) {
     switch(cellID) {
         case "1":
@@ -299,6 +321,7 @@ function showMenu(close, open=null) {
     };
 };
 
+// Adds to an array all inputed player tokens from menu
 function getPlayerTokens(playerCount) {
     playerTokens = [];
     for (let i = 0; i < playerCount; i++) {
@@ -360,6 +383,7 @@ function setOptions(menuType) {
         };
     };
     
+    // Generate buttons based on which menu is displayed, disables irrelevant buttons
     switch (menuType) {
         case "base":
             optionsArea.innerHTML = `<button class="option" onclick="setOptions('setup'), showMenu(['game'],['setupMenuField'])">New Game</button>
@@ -385,16 +409,18 @@ function setOptions(menuType) {
     };
 };
 
+// Checks inputted values wont create errors, and informs user what the issue is
 function checkSetupInput(size, players, goal) {
     if (!size || !players || !goal) {
         alert(`All fields must be filled`);
         return
     };
+    // Checks if input is specificly a number and positive
     if (!(size > 0) || !(players > 0) || !(goal > 0)) {
         alert(`All fields must be a positive number`)
         return
     };
-    if (goal > size) {
+    if (goal > (size * size)) {
         alert(`Win condition must not be larger than what's possible on the board`)
         return
     };
@@ -402,36 +428,37 @@ function checkSetupInput(size, players, goal) {
         alert(`You can't play by yourself now`)
         return
     };
+
+    // If no issues are found, continue and execute following functions 
     setPlayerMenu(players)
     setOptions('players')
     showMenu(['setupMenuField'],['playerMenuField'])
 };
 
+
+// Checks input of player tokens so no repeats are present, preventing a bug
 function checkPlayersInput(players) {
     getPlayerTokens(players);
-    // let uniques = new Set(playerTokens)
-    // if (uniques.length != playerTokens.length) {
-    //     alert(`No duplicate character tokens are allowed`)
-    //     return
-    // };
+    let uniques = new Set(playerTokens)
+    if (uniques.size != playerTokens.length) {
+        alert(`No duplicate character tokens are allowed ${uniques.size} ${playerTokens.length}`)
+        return
+    };
     newGame(document.getElementById('size').value, playerTokens, document.getElementById('goal').value)
     setOptions('base')
     showMenu(['playerMenuField'],['game'])
 };
 
-function changeStyle(button) {
-    button.style.borderStyle = "outset"
-};
-
+// Generates main menu buttons on start
 setOptions('base');
 
+// Adds 'pressed' class to buttons after being pressed to change button styling
 const buttonList = document.querySelectorAll('.cell');
 buttonList.forEach(button => {
     button.addEventListener('click', () => {
         button.classList.add('pressed');
     });
 })
-
 
 
 // add comments
