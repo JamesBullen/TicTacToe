@@ -1,0 +1,99 @@
+/* Modal systems visuals */
+.modal {
+    --gap: 16px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: var(--gap);
+    background: rgba(0,0,0,0.5);
+}
+.modalInner {
+    background: #ffff;
+    width: 100%;
+    max-width: 800px;
+    overflow: hidden;
+    border-radius: 4px;
+    font-size: 20px;
+}
+.modalTop {
+    display: flex;
+    align-items: center;
+    background-color:aquamarine;
+}
+.modalTitle {
+    flex-grow: 1;
+    padding: 0 var(--gap);
+    font-size: 24px;
+}
+.modalClose {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: var(--gap);
+    background: none;
+    border: none;
+    outline: none;
+}
+.modalContent {
+    padding: var(--gap);
+    line-height: 1.5;
+}
+.modalBottom {
+    text-align: right;
+    padding: 0 var(--gap) var(--gap) var(--gap);
+}
+.modalInput {
+    display: flex;
+    padding: 6px 12px;
+    border-width: 1px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+.modalButton {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: aquamarine;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.modalButton:not(:last-child) {
+    margin-right: var(--gap);
+}
+.modalButton:hover {
+    background: #52dac3;
+    color: #ffff;
+}
+
+
+/* Message systems visuals */
+.message {
+    --gap: 8px;
+
+    position: fixed;
+    width: 100vw;
+    height: 50vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+.messageInner {
+    background: #791b1b;
+    max-width: 800px;
+    border-radius: 4px;
+    text-align: center;
+    background-color:aquamarine;
+    font-size: 20px;
+    padding: var(--gap);
+}
