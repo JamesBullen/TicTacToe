@@ -394,7 +394,8 @@ function showGameSelect() {
     for (let i = 0; i < storedGames.length; i++) {
         tempArray.push(`<button class="row" onclick="loadGame(${i}), setOptions('base'), showMenu(['gameMenuField'],['game'])">${storedGames[i].gridSize}x${storedGames[i].gridSize}, ${storedGames[i].players.length} Players, ${storedGames[i].winCon} to win</button>`)
     };
-    document.getElementById('gameMenuField').innerHTML = tempArray.join("");
+    
+    showModal('Game Select', tempArray.join())
 }
 
 function showGameRecords() {
@@ -404,7 +405,8 @@ function showGameRecords() {
     for (let i = 0; i < pastGames.length; i++) {
         tempArray.push(`<button class="row" onclick="loadPastGame(${i})">Player ${pastGames[i].result}</button>`)
     };
-    document.getElementById('pastMenuField').innerHTML = tempArray.join("");
+    
+    showModal('Game Select', tempArray.join())
 };
 
 function loadPastGame(index) {
@@ -434,8 +436,8 @@ function setOptions() {
     // Generate buttons based on which menu is displayed, disables irrelevant buttons
     optionsArea.innerHTML = `<button class="option" onclick="showSetupMenu()">New Game</button>
     <button class="option" onclick="saveGame()" ${noSaves}>Save Game</button>
-    <button class="option" onclick="" ${noGames}>Load Game</button>
-    <button class="option" onclick="" ${noRecords}>Past Game</button>`
+    <button class="option" onclick="showGameSelect()" ${noGames}>Load Game</button>
+    <button class="option" onclick="showGameRecords()" ${noRecords}>Past Game</button>`
 };
 
 // Checks inputted values wont create errors, and informs user what the issue is
