@@ -104,7 +104,7 @@ class gamestate {
     // Returns true if a winning line length is now present in given direction, returns false if otherwise
     checkLine(start, direction, token) {
         let lineCount = this.checkDirection(start, direction, token);
-        
+
         if (lineCount == this.winCon) {
             return true;
         }
@@ -248,7 +248,8 @@ function quitGame() {
 
 // Removes game from storedGames and moves in pastGames
 function endGame(outcome) {
-    alert(outcome);
+    showMessage(outcome);
+    
     let pastGames = JSON.parse(localStorage.getItem('pastGames'));
     if (!pastGames) {
         pastGames = [];
@@ -261,7 +262,7 @@ function endGame(outcome) {
     storedGames.splice(currentIndex, 1);
     localStorage.setItem('storedGames', JSON.stringify(storedGames));
 
-    setOptions('base');
+    setOptions();
     gameActive = false;
 };
 
@@ -306,22 +307,6 @@ function demoMove(cellID) {
         case "9":
             document.getElementById(cellID).innerText = "e";
             break;
-    };
-};
-
-function showMenu(close, open=null) {
-    for (let i = 0; i < close.length; i++) {
-        document.getElementById(close[i]).style.display = "none";
-    };
-    
-    if (open) {
-        for (let i = 0; i < open.length; i++) {
-            if (open[i].includes('Field') || open[i].includes('game')){
-                document.getElementById(open[i]).style.display = "grid";
-            } else {
-                document.getElementById(open[i]).style.display = "flex";
-            };
-        };
     };
 };
 
@@ -402,7 +387,7 @@ function showPlayerMenu(playerCount) {
     showModal('Player Tokens','', modalInputs, modalButtons, true);
 };
 
-function setGameSelect() {
+function showGameSelect() {
     let storedGames = JSON.parse(localStorage.getItem('storedGames'));
     let tempArray = []
 
@@ -412,7 +397,7 @@ function setGameSelect() {
     document.getElementById('gameMenuField').innerHTML = tempArray.join("");
 }
 
-function setGameRecords() {
+function showGameRecords() {
     let pastGames = JSON.parse(localStorage.getItem('pastGames'));
     let tempArray = []
 
@@ -427,51 +412,30 @@ function loadPastGame(index) {
     let tempObj = new gameRecord(pastGames[index].gameboard, pastGames[index].result)
     tempObj.generatePageGrid()
     showMenu(['pastMenuField'],['game'])
-    setOptions('base')
+    setOptions();
 }
 
-function setOptions(menuType) {
+function setOptions() {
     // Sets up if button should be disabled or not
     let noSaves = '';
     let noGames = '';
     let noRecords = '';
 
-    if (menuType == 'base') {
-        if (!currentGame) {
-            noSaves = 'disabled';
-        }
+    if (!currentGame) {
+        noSaves = 'disabled';
+    }
     if (localStorage.getItem('storedGames') == null || localStorage.getItem('storedGames') == '[]') {
             noGames = 'disabled';
         }
     if (localStorage.getItem('pastGames') == null) {
             noRecords ='disabled';
-        };
     };
     
     // Generate buttons based on which menu is displayed, disables irrelevant buttons
-    switch (menuType) {
-        case "base":
-            optionsArea.innerHTML = `<button class="option" onclick="showSetupMenu()">New Game</button>
-            <button class="option" onclick="saveGame()" ${noSaves}>Save Game</button>
-            <button class="option" onclick="" ${noGames}>Load Game</button>
-            <button class="option" onclick="" ${noRecords}>Past Game</button>`
-            break;
-        case "setup":
-            optionsArea.innerHTML = `<button class="option" onclick="checkSetupInput(size.value, players.value, goal.value)">Next</button>
-            <button class="option" onclick="">Cancel</button>`
-            break;
-        case "players":
-            optionsArea.innerHTML = `<button class="option" onclick="">Start Game</button>
-            <button class="option" onclick="">Back</button>
-            <button class="option" onclick="">Cancel</button>`
-            break;
-        case "games":
-            optionsArea.innerHTML = `<button class="option" onclick="">Back</button>`
-            break;
-        case "records":
-            optionsArea.innerHTML = `<button class="option" onclick="">Back</button>`
-            break;
-    };
+    optionsArea.innerHTML = `<button class="option" onclick="showSetupMenu()">New Game</button>
+    <button class="option" onclick="saveGame()" ${noSaves}>Save Game</button>
+    <button class="option" onclick="" ${noGames}>Load Game</button>
+    <button class="option" onclick="" ${noRecords}>Past Game</button>`
 };
 
 // Checks inputted values wont create errors, and informs user what the issue is
@@ -479,20 +443,20 @@ function checkSetupInput(size, players, goal) {
     gameSettings = [size, players, goal];
 
     if (!size || !players || !goal) {
-        alert(`All fields must be filled`);
+        showMessage(`All fields must be filled`);
         return
     };
     // Checks if input is specificly a number and positive
     if (!(size > 0) || !(players > 0) || !(goal > 0)) {
-        alert(`All fields must be a positive number`)
+        showMessage(`All fields must be a positive number`)
         return
     };
     if (goal > (size * size)) {
-        alert(`Win condition must not be larger than what's possible on the board`)
+        showMessage(`Win condition must not be larger than what's possible on the board`)
         return
     };
     if (players == 1) {
-        alert(`You can't play by yourself now`)
+        showMessage(`You can't play by yourself now`)
         return
     };
 
@@ -508,7 +472,7 @@ function checkPlayersInput() {
 
     let uniques = new Set(playerTokens)
     if (uniques.size != playerTokens.length) {
-        alert(`No duplicate character tokens are allowed`)
+        showMessage(`No duplicate character tokens are allowed`)
         return
     };
 
@@ -528,7 +492,7 @@ function setToPressed() {
 }
 
 // Generates main menu buttons on start
-setOptions('base');
+setOptions();
 setToPressed();
 
 

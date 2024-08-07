@@ -79,10 +79,10 @@ function showMessage(content) {
 
     setTimeout(() => {
         $(`.message`).fadeOut("slow","swing")
-    }, 1000);
+    }, 1500);
     setTimeout(() => {
         document.body.removeChild(message)
-    }, 2000);
+    }, 2500);
 };
 
 /* Example/Template
