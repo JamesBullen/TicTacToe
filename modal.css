@@ -16,7 +16,7 @@
     background: rgba(0,0,0,0.5);
 }
 .modalInner {
-    background: #ffff;
+    background: #ffeed0;
     width: 100%;
     max-width: 800px;
     overflow: hidden;
@@ -26,7 +26,7 @@
 .modalTop {
     display: flex;
     align-items: center;
-    background-color:aquamarine;
+    background-color: #f79f24;
 }
 .modalTitle {
     flex-grow: 1;
@@ -60,7 +60,7 @@
 .modalButton {
     display: inline-block;
     padding: 6px 12px;
-    background-color: aquamarine;
+    background-color: #ff2c63;
     border: none;
     outline: none;
     border-radius: 4px;
@@ -70,7 +70,7 @@
     margin-right: var(--gap);
 }
 .modalButton:hover {
-    background: #52dac3;
+    background: #e20049;
     color: #ffff;
 }
 
@@ -93,7 +93,7 @@
     max-width: 800px;
     border-radius: 4px;
     text-align: center;
-    background-color:aquamarine;
+    background-color:#f79f24;
     font-size: 20px;
     padding: var(--gap);
 }

@@ -50,7 +50,7 @@ class gamestate {
 
     // Creates array of elements used to represent the gameboard
     generatePageGrid() {
-        gameGrid.innerHTML = '';
+        gameGrid.innerHTML = ' ';
 
         let toAppend = document.createElement(`div`);
         let tempRow = [];
@@ -88,24 +88,23 @@ class gamestate {
         for (let i = 0; i < spacesToCheck.length; i++) {
             if (this.checkLine(coord, spacesToCheck[i], token)) {
                 endGame(`${this.currentPlayer()} wins`);
-                return;
             }
         };
 
         // Checks if should end in draw, determined by turns passed versus possible spaces
         if (this.turn >= this.spaces) {
             endGame(`Draw`);
-            return;
         };
 
         // Incements turn counter and continues game
-        this.turn++
+        this.turn++;
         return;
     };
 
     // Returns true if a winning line length is now present in given direction, returns false if otherwise
     checkLine(start, direction, token) {
         let lineCount = this.checkDirection(start, direction, token);
+        
         if (lineCount == this.winCon) {
             return true;
         }
@@ -206,6 +205,8 @@ function newGame(size, goal) {
     currentGame.generatePageGrid();
     saveGame();
     gameActive = true;
+
+    setToPressed();
 };
 
 function saveGame() {
@@ -236,6 +237,8 @@ function loadGame(selectedGame) {
     currentGame = new gamestate(temp.gridSize, temp.players, temp.winCon, temp.id, temp.gameboard, temp.turn);
     currentGame.generatePageGrid();
     gameActive = true;
+
+    setToPressed();
 };
 
 // To be expanded, retires active game and saves game to pastGames in local storage
@@ -328,7 +331,6 @@ function getPlayerTokens() {
     for (let i = 0; i < gameSettings[1]; i++) {
         playerTokens.push(document.getElementById(`player${i}`).value)
     };
-    console.log(playerTokens)
 }
 
 function showSetupMenu() {
@@ -372,7 +374,7 @@ function showPlayerMenu(playerCount) {
     for (let i = 0; i < playerCount; i++) {
         modalInputs.push({label: `player${i}`, text: `Player ${i +1}`})
     };
-    console.log(modalInputs)
+
     const modalButtons = [
         {
             label: 'Start',
@@ -510,21 +512,24 @@ function checkPlayersInput() {
         return
     };
 
-    newGame(gameSettings[0], playerTokens, gameSettings[2]);
+    newGame(gameSettings[0], gameSettings[2]);
 
     return true;
 };
 
+// Adds 'pressed' class to buttons after being pressed to change button styling
+function setToPressed() {
+    const buttonList = document.querySelectorAll('.cell');
+    buttonList.forEach(button => {
+        button.addEventListener('click', () => {
+            button.classList.add('pressed');
+        });
+    });
+}
+
 // Generates main menu buttons on start
 setOptions('base');
-
-// Adds 'pressed' class to buttons after being pressed to change button styling
-const buttonList = document.querySelectorAll('.cell');
-buttonList.forEach(button => {
-    button.addEventListener('click', () => {
-        button.classList.add('pressed');
-    });
-});
+setToPressed();
 
 
 // add more comments
