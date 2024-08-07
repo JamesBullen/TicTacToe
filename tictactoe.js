@@ -1,6 +1,7 @@
 const kernelMatrix = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
 let currentGame;
 let totalGames = localStorage.getItem(`totalGames`);
+let gameSettings = []
 let playerTokens = [];
 let gameActive = true;
 const gameGrid = document.querySelector(`#game`);
@@ -322,20 +323,81 @@ function showMenu(close, open=null) {
 };
 
 // Adds to an array all inputed player tokens from menu
-function getPlayerTokens(playerCount) {
+function getPlayerTokens() {
     playerTokens = [];
-    for (let i = 0; i < playerCount; i++) {
+    for (let i = 0; i < gameSettings[1]; i++) {
         playerTokens.push(document.getElementById(`player${i}`).value)
     };
     console.log(playerTokens)
 }
 
-function setPlayerMenu(playerCount) {
-    let tempArray = []
+function showSetupMenu() {
+    const modalInputs = [
+        {
+            label: 'size',
+            text: 'Board Size'
+        },
+        {
+            label: 'players',
+            text: 'Number of Players'
+        },
+        {
+            label: 'goal',
+            text: 'In a Row to Win'
+        }
+    ];
+
+    const modalButtons = [
+        {
+            label: 'Next',
+            onclick: modal => {
+                if (checkSetupInput(size.value, players.value, goal.value)) {
+                    document.body.removeChild(modal);
+                };
+            },
+            triggerClose: false
+        },
+        {
+            label: 'Cancel',
+            onclick: modal => {},
+            triggerClose: true
+        }
+    ];
+
+    showModal('Game Options','', modalInputs, modalButtons, true);
+};
+
+function showPlayerMenu(playerCount) {
+    let modalInputs = []
     for (let i = 0; i < playerCount; i++) {
-        tempArray.push(`<label for="player${i}">Player ${i + 1}'s Token</label><input type="text" id="player${i}" class>`)
+        modalInputs.push({label: `player${i}`, text: `Player ${i +1}`})
     };
-    document.getElementById('playerMenuField').innerHTML = tempArray.join("")
+    console.log(modalInputs)
+    const modalButtons = [
+        {
+            label: 'Start',
+            onclick: modal => {
+                if (checkPlayersInput()) {
+                    document.body.removeChild(modal);
+                };
+            },
+            triggerClose: false
+        },
+        {
+            label: 'Back',
+            onclick: modal => {
+                showSetupMenu();
+            },
+            triggerClose: true
+        },
+        {
+            label: 'Cancel',
+            onclick: modal => {},
+            triggerClose: true
+        }
+    ];
+
+    showModal('Player Tokens','', modalInputs, modalButtons, true);
 };
 
 function setGameSelect() {
@@ -387,31 +449,33 @@ function setOptions(menuType) {
     // Generate buttons based on which menu is displayed, disables irrelevant buttons
     switch (menuType) {
         case "base":
-            optionsArea.innerHTML = `<button class="option" onclick="setOptions('setup'), showMenu(['game'],['setupMenuField'])">New Game</button>
+            optionsArea.innerHTML = `<button class="option" onclick="showSetupMenu()">New Game</button>
             <button class="option" onclick="saveGame()" ${noSaves}>Save Game</button>
-            <button class="option" onclick="setGameSelect(), setOptions('games'), showMenu(['game'],['gameMenuField'])" ${noGames}>Load Game</button>
-            <button class="option" onclick="setGameRecords(), setOptions('records'), showMenu(['game'],['pastMenuField'])" ${noRecords}>Past Game</button>`
+            <button class="option" onclick="" ${noGames}>Load Game</button>
+            <button class="option" onclick="" ${noRecords}>Past Game</button>`
             break;
         case "setup":
             optionsArea.innerHTML = `<button class="option" onclick="checkSetupInput(size.value, players.value, goal.value)">Next</button>
-            <button class="option" onclick="setOptions('base'), showMenu(['setupMenuField'],['game'])">Cancel</button>`
+            <button class="option" onclick="">Cancel</button>`
             break;
         case "players":
-            optionsArea.innerHTML = `<button class="option" onclick="checkPlayersInput(players.value)">Start Game</button>
-            <button class="option" onclick="setOptions('setup'), showMenu(['playerMenuField'],['setupMenuField'])">Back</button>
-            <button class="option" onclick="setOptions('base'), showMenu(['playerMenuField'],['game'])">Cancel</button>`
+            optionsArea.innerHTML = `<button class="option" onclick="">Start Game</button>
+            <button class="option" onclick="">Back</button>
+            <button class="option" onclick="">Cancel</button>`
             break;
         case "games":
-            optionsArea.innerHTML = `<button class="option" onclick="setOptions('base'), showMenu(['gameMenuField'],['game'])">Back</button>`
+            optionsArea.innerHTML = `<button class="option" onclick="">Back</button>`
             break;
         case "records":
-            optionsArea.innerHTML = `<button class="option" onclick="setOptions('base'), showMenu(['pastMenuField'],['game'])">Back</button>`
+            optionsArea.innerHTML = `<button class="option" onclick="">Back</button>`
             break;
     };
 };
 
 // Checks inputted values wont create errors, and informs user what the issue is
 function checkSetupInput(size, players, goal) {
+    gameSettings = [size, players, goal];
+
     if (!size || !players || !goal) {
         alert(`All fields must be filled`);
         return
@@ -430,24 +494,25 @@ function checkSetupInput(size, players, goal) {
         return
     };
 
-    // If no issues are found, continue and execute following functions 
-    setPlayerMenu(players)
-    setOptions('players')
-    showMenu(['setupMenuField'],['playerMenuField'])
+    // If no issues are found, continue to next menu
+    showPlayerMenu(players);
+    return true
 };
 
 
 // Checks input of player tokens so no repeats are present, preventing a bug
-function checkPlayersInput(players) {
-    getPlayerTokens(players);
+function checkPlayersInput() {
+    getPlayerTokens();
+
     let uniques = new Set(playerTokens)
     if (uniques.size != playerTokens.length) {
-        alert(`No duplicate character tokens are allowed ${uniques.size} ${playerTokens.length}`)
+        alert(`No duplicate character tokens are allowed`)
         return
     };
-    newGame(document.getElementById('size').value, playerTokens, document.getElementById('goal').value)
-    setOptions('base')
-    showMenu(['playerMenuField'],['game'])
+
+    newGame(gameSettings[0], playerTokens, gameSettings[2]);
+
+    return true;
 };
 
 // Generates main menu buttons on start
@@ -459,10 +524,10 @@ buttonList.forEach(button => {
     button.addEventListener('click', () => {
         button.classList.add('pressed');
     });
-})
+});
 
 
-// add comments
+// add more comments
 // reduce repeated code
 // reorder functions
 // remove alerts and replace with text in DOM

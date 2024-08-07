@@ -44,10 +44,10 @@ function addButtons(buttons, modal) {
         element.classList.add(`modalButton`);
         element.textContent = button.label;
         element.addEventListener("click", () => {
+            button.onclick(modal);
             if (button.triggerClose) {
                 document.body.removeChild(modal);
             };
-            button.onclick(modal);
         });
 
         modal.querySelector(`.modalBottom`).appendChild(element);
