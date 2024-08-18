@@ -45,6 +45,8 @@
 .modalContent {
     padding: var(--gap);
     line-height: 1.5;
+    overflow-y: scroll;
+    max-height: 300px;
 }
 .modalBottom {
     text-align: right;

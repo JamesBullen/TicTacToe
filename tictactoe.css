@@ -17,12 +17,10 @@
 
     font-family:Arial, Helvetica, sans-serif;
 }
-
 body {
     background: linear-gradient(0deg, rgba(232,207,167,1) 0%, rgba(255,238,208,1) 100%);
     background-attachment: fixed;
 }
-
 h3 {
     text-align: center;
     color: var(--colourDefault);
@@ -43,12 +41,11 @@ h3 {
     color: var(--colour1);
     background-color: var(--colour2);
     border-color: var(--colour2);
-}
 
-.cell:focus{
-    background-color: var(--colour2);
+    &:focus{
+        background-color: var(--colour2);
+    }
 }
-
 .pressed {
     border-style: outset;
 }
@@ -64,28 +61,25 @@ h3 {
     border-width: 0.5%;
     border-radius: 5px;
     padding: 5px;
-}
+    overflow:visible;
 
-.option:hover {
-    border-color: var(--colourHover);
-    color: var(--colourHover);
+    &:hover {
+        border-color: var(--colourHover);
+        color: var(--colourHover);
+    }
+    &:active {
+        background-color: var(--colour1);
+        color: var(--colourActive);
+        border-color: var(--colourActive);
+    }
+    &:focus {
+        background-color: var(--colour1);
+    }
+    &:disabled {
+        color: var(--colourDisabled);
+        border-color: var(--colourDisabled);
+    }
 }
-
-.option:active {
-    background-color: var(--colour1);
-    color: var(--colourActive);
-    border-color: var(--colourActive);
-}
-
-.option:focus {
-    background-color: var(--colour1);
-}
-
-.option:disabled {
-    color: var(--colourDisabled);
-    border-color: var(--colourDisabled);
-}
-
 #screen {
     display: grid;
     justify-content: center;
@@ -94,13 +88,13 @@ h3 {
     padding-top: 50px;
     color: #c4544a;
 }
-
 #options {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 200px;
-}
-#options button {
-    margin-inline: 10px;
+
+    & button {
+        margin-inline: 10px;
+    }
 }

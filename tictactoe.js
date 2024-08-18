@@ -7,7 +7,6 @@ let gameActive = true;
 const gameGrid = document.querySelector(`#game`);
 const optionsArea = document.querySelector(`#options`);
 
-// Creates object that'll store relevant game data and mutate its values as needed
 class gamestate {
     constructor(gridSize, players, winCon, id=totalGames, board=null, turn=1) {
         this.id = id;
@@ -392,9 +391,9 @@ function showGameSelect() {
     let tempArray = []
 
     for (let i = 0; i < storedGames.length; i++) {
-        tempArray.push(`<button class="row" onclick="loadGame(${i}), setOptions('base'), showMenu(['gameMenuField'],['game'])">${storedGames[i].gridSize}x${storedGames[i].gridSize}, ${storedGames[i].players.length} Players, ${storedGames[i].winCon} to win</button>`)
+        tempArray.push(`${storedGames[i].gridSize}x${storedGames[i].gridSize}, ${storedGames[i].players.length} Players, ${storedGames[i].winCon} to win <button class="row" onclick="loadGame(${i}), setOptions('base'), showMenu(['gameMenuField'],['game'])">Select</button><br>`)
     };
-    
+
     showModal('Game Select', tempArray.join())
 }
 
@@ -464,7 +463,8 @@ function checkSetupInput(size, players, goal) {
 
     // If no issues are found, continue to next menu
     showPlayerMenu(players);
-    return true
+
+    return true;
 };
 
 
@@ -501,6 +501,5 @@ setToPressed();
 // add more comments
 // reduce repeated code
 // reorder functions
-// remove alerts and replace with text in DOM
 // add easter egg feature to demo
 // add ai for singleplayer
