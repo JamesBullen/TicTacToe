@@ -16,56 +16,79 @@
     padding: 0;
 
     font-family:Arial, Helvetica, sans-serif;
-}
-body {
-    background: linear-gradient(0deg, rgba(232,207,167,1) 0%, rgba(255,238,208,1) 100%);
-    background-attachment: fixed;
-}
-h3 {
-    text-align: center;
-    color: var(--colourDefault);
-    font-weight: bolder;
+
+    & body {
+        background-color: #E8C299;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 100 60'%3E%3Cg %3E%3Crect fill='%23E8C299' width='11' height='11'/%3E%3Crect fill='%23e8c39a' x='10' width='11' height='11'/%3E%3Crect fill='%23e9c49b' y='10' width='11' height='11'/%3E%3Crect fill='%23e9c49c' x='20' width='11' height='11'/%3E%3Crect fill='%23e9c59d' x='10' y='10' width='11' height='11'/%3E%3Crect fill='%23eac69d' y='20' width='11' height='11'/%3E%3Crect fill='%23eac79e' x='30' width='11' height='11'/%3E%3Crect fill='%23ebc79f' x='20' y='10' width='11' height='11'/%3E%3Crect fill='%23ebc8a0' x='10' y='20' width='11' height='11'/%3E%3Crect fill='%23ebc9a1' y='30' width='11' height='11'/%3E%3Crect fill='%23eccaa2' x='40' width='11' height='11'/%3E%3Crect fill='%23eccaa3' x='30' y='10' width='11' height='11'/%3E%3Crect fill='%23eccba4' x='20' y='20' width='11' height='11'/%3E%3Crect fill='%23edcca5' x='10' y='30' width='11' height='11'/%3E%3Crect fill='%23edcda5' y='40' width='11' height='11'/%3E%3Crect fill='%23edcda6' x='50' width='11' height='11'/%3E%3Crect fill='%23eecea7' x='40' y='10' width='11' height='11'/%3E%3Crect fill='%23eecfa8' x='30' y='20' width='11' height='11'/%3E%3Crect fill='%23efd0a9' x='20' y='30' width='11' height='11'/%3E%3Crect fill='%23efd0aa' x='10' y='40' width='11' height='11'/%3E%3Crect fill='%23efd1ab' y='50' width='11' height='11'/%3E%3Crect fill='%23f0d2ac' x='60' width='11' height='11'/%3E%3Crect fill='%23f0d3ad' x='50' y='10' width='11' height='11'/%3E%3Crect fill='%23f1d3ae' x='40' y='20' width='11' height='11'/%3E%3Crect fill='%23f1d4af' x='30' y='30' width='11' height='11'/%3E%3Crect fill='%23f1d5b0' x='20' y='40' width='11' height='11'/%3E%3Crect fill='%23f2d6b0' x='10' y='50' width='11' height='11'/%3E%3Crect fill='%23f2d6b1' x='70' width='11' height='11'/%3E%3Crect fill='%23f2d7b2' x='60' y='10' width='11' height='11'/%3E%3Crect fill='%23f3d8b3' x='50' y='20' width='11' height='11'/%3E%3Crect fill='%23f3d9b4' x='40' y='30' width='11' height='11'/%3E%3Crect fill='%23f4d9b5' x='30' y='40' width='11' height='11'/%3E%3Crect fill='%23f4dab6' x='20' y='50' width='11' height='11'/%3E%3Crect fill='%23f4dbb7' x='80' width='11' height='11'/%3E%3Crect fill='%23f5dcb8' x='70' y='10' width='11' height='11'/%3E%3Crect fill='%23f5dcb9' x='60' y='20' width='11' height='11'/%3E%3Crect fill='%23f6ddba' x='50' y='30' width='11' height='11'/%3E%3Crect fill='%23f6debb' x='40' y='40' width='11' height='11'/%3E%3Crect fill='%23f6debc' x='30' y='50' width='11' height='11'/%3E%3Crect fill='%23f7dfbd' x='90' width='11' height='11'/%3E%3Crect fill='%23f7e0be' x='80' y='10' width='11' height='11'/%3E%3Crect fill='%23f8e1bf' x='70' y='20' width='11' height='11'/%3E%3Crect fill='%23f8e1c0' x='60' y='30' width='11' height='11'/%3E%3Crect fill='%23f8e2c0' x='50' y='40' width='11' height='11'/%3E%3Crect fill='%23f9e3c1' x='40' y='50' width='11' height='11'/%3E%3Crect fill='%23f9e4c2' x='90' y='10' width='11' height='11'/%3E%3Crect fill='%23fae4c3' x='80' y='20' width='11' height='11'/%3E%3Crect fill='%23fae5c4' x='70' y='30' width='11' height='11'/%3E%3Crect fill='%23fae6c5' x='60' y='40' width='11' height='11'/%3E%3Crect fill='%23fbe7c6' x='50' y='50' width='11' height='11'/%3E%3Crect fill='%23fbe7c7' x='90' y='20' width='11' height='11'/%3E%3Crect fill='%23fce8c8' x='80' y='30' width='11' height='11'/%3E%3Crect fill='%23fce9c9' x='70' y='40' width='11' height='11'/%3E%3Crect fill='%23fceaca' x='60' y='50' width='11' height='11'/%3E%3Crect fill='%23fdeacb' x='90' y='30' width='11' height='11'/%3E%3Crect fill='%23fdebcc' x='80' y='40' width='11' height='11'/%3E%3Crect fill='%23feeccd' x='70' y='50' width='11' height='11'/%3E%3Crect fill='%23feedce' x='90' y='40' width='11' height='11'/%3E%3Crect fill='%23ffedcf' x='80' y='50' width='11' height='11'/%3E%3Crect fill='%23FFEED0' x='90' y='50' width='11' height='11'/%3E%3C/g%3E%3C/svg%3E");
+        background-attachment: fixed;
+        background-size: cover;
+    }
+    & h3 {
+        text-align: center;
+        color: var(--colourDefault);
+        font-weight: bolder;
+    }
 }
 
 /* Game Section */
+#game {
+    padding: 20px;
+}
+div {
+    white-space: nowrap;
+}
+.row {
+    margin: 0;
+    & .col {
+        float: none;
+    }
+}
 .cell {
     justify-content: center;
     text-align: center;
-    margin-inline: 10px;
+    margin: 10px;
     width: 50px;
-    height: 50px;
+    aspect-ratio: 1/1;
     font-weight: bolder;
-    border-width: 10px;
+    border-width: 7px;
     border-style: inset;
+    vertical-align: middle;
 
     color: var(--colour1);
+    background: linear-gradient(315deg, transparent, rgba(0,0,0,0.2) 100%);
     background-color: var(--colour2);
     border-color: var(--colour2);
+    box-shadow: 3px 3px 20px 3px rgba(0,0,0,0.2) inset;
 
     &:focus{
         background-color: var(--colour2);
     }
-}
-.pressed {
-    border-style: outset;
+    &.pressed {
+        border-style: outset;
+        background: linear-gradient(135deg, transparent, rgba(0,0,0,0.3) 100%);
+        background-color: var(--colour2);
+        box-shadow: 3px 3px 20px 3px rgba(0,0,0,0.2);
+    }
 }
 
 /* Options Section */
 .option {
-    background-color: var(--colour1);
+    background-color: transparent;
     font-family: inherit;
+    font-weight: 600;
     color: var(--colourDefault);
     border: var(--colourDefault);
     border-color: var(--colourDefault);
     border-style: solid;
     border-width: 0.5%;
-    border-radius: 5px;
     padding: 5px;
     overflow:visible;
+    transition: box-shadow 0.2s;
 
-    &:hover {
+    &:hover:not(:disabled) {
         border-color: var(--colourHover);
         color: var(--colourHover);
+        box-shadow: 3px 3px 10px rgba(226,0,73,0.25);
     }
     &:active {
         background-color: var(--colour1);
