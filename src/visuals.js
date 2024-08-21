@@ -106,7 +106,7 @@ function showGameRecords() {
     let tempArray = []
 
     for (let i = 0; i < pastGames.length; i++) {
-        tempArray.push(`<button class="row" onclick="loadPastGame(${i})">Player ${pastGames[i].result}</button>`)
+        tempArray.push(`<button class="row onclick="loadPastGame(${i})">Player ${pastGames[i].result}</button>`)
     };
     
     showModal('Game Select', tempArray.join())

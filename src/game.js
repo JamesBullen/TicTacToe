@@ -27,6 +27,7 @@ function newGame(size, goal) {
     gameActive = true;
 
     setToPressed();
+    setOptions();
 };
 
 function saveGame() {
@@ -138,6 +139,7 @@ function getPlayerTokens() {
     };
 }
 
+// Displays a past game
 function loadPastGame(index) {
     let pastGames = JSON.parse(localStorage.getItem('pastGames'));
     let tempObj = new gameRecord(pastGames[index].gameboard, pastGames[index].result)
